@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>SmartCalc</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon-192.svg" />
+  <meta name="theme-color" content="#4f33b0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1 class="app-title">SmartCalc</h1>
+      <div class="controls">
+        <button id="modeToggle" aria-label="Switch mode" class="mode-btn">Normal</button>
+        <button id="themeToggle" aria-label="Toggle theme" class="theme-btn" title="Toggle theme">☀️</button>
+        <button id="installBtn" class="install-btn" title="Install app" hidden>Install</button>
+      </div>
+    </header>
+
+    <section class="calculator-card">
+      <div class="display-wrap">
+        <div id="display" class="display" aria-live="polite"></div>
+      </div>
+
+      <div class="row small-gap">
+        <div class="left-col">
+          <div class="buttons-grid" id="buttonsGrid">
+            <!-- Buttons are rendered by script.js for easier mode switch -->
+          </div>
+        </div>
+
+        <aside class="history-panel" id="historyPanel" aria-label="History">
+          <div class="history-header">
+            <h3>History</h3>
+            <button id="clearHistory" title="Clear history">Clear</button>
+          </div>
+          <ul id="historyList" class="history-list"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="app-footer">
+      <small>SmartCalc — Offline & Installable</small>
+    </footer>
+  </main>
+
+  <script src="script.js" defer></script>
+  <script>
+    // register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .catch(err => console.warn('SW registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

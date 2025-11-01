@@ -1,0 +1,156 @@
+:root{
+  --bg1: #4f33b0;
+  --bg2: #d235a5;
+  --card: #fff;
+  --text: #081219;
+  --muted: #667;
+  --accent: #6bd;
+}
+
+*{box-sizing:border-box}
+html,body,#app{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(135deg,var(--bg1),var(--bg2));
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  -webkit-font-smoothing:antialiased;
+}
+
+.app{
+  width:100%;
+  max-width:420px;
+}
+
+/* Header */
+.app-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+  padding: 0 6px;
+}
+.app-title{
+  color:#fff;
+  font-weight:600;
+  letter-spacing:0.2px;
+  margin:0;
+  font-size:1.1rem;
+}
+
+/* Controls (top-right) - spaced above the display as requested */
+.controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.controls button{
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  padding:8px 10px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.controls .theme-btn{ width:48px; height:40px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+.controls .install-btn{ padding:8px; font-size:0.85rem }
+
+/* Card */
+.calculator-card{
+  background: var(--card);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.25);
+  color: var(--text);
+}
+
+/* Display */
+.display-wrap{
+  margin-bottom:10px;
+  padding:6px;
+}
+.display{
+  min-height:70px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.02));
+  border-radius:12px;
+  padding:10px;
+  font-size:1.6rem;
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  overflow-x:auto;
+  white-space:nowrap;
+}
+
+/* layout: buttons + history side-by-side on wider screens */
+.row.small-gap{ display:flex; gap:10px; align-items:flex-start; }
+.left-col{ flex:1; }
+
+/* Buttons grid */
+.buttons-grid{
+  display:grid;
+  grid-template-columns: repeat(4,1fr);
+  gap:10px;
+  padding:6px;
+}
+.button{
+  height:58px;
+  border-radius:12px;
+  border:none;
+  font-size:1.05rem;
+  font-weight:600;
+  cursor:pointer;
+  background: linear-gradient(180deg,#f4f7fb,#e8eef8);
+  box-shadow: 0 6px 14px rgba(11,22,64,0.06);
+  transition: transform .12s ease;
+}
+.button:active{ transform: translateY(2px) scale(.995) }
+
+.button.operator{ background: linear-gradient(180deg,#ffe9f7,#ffd0f4); color:#9b007d }
+.button.equal{ grid-row: span 2; background: linear-gradient(180deg,#dff7ec,#bff0d6); color:#03533a }
+.button.clear{ background: linear-gradient(180deg,#ffe8e8,#ffd8d8); color:#b30000 }
+.button.num{ background: linear-gradient(180deg,#e6f6ff,#cfeeff); color:#062c3a }
+
+/* History panel */
+.history-panel{
+  width:140px;
+  background: linear-gradient(180deg,#fbfbff,#f5f7ff);
+  border-radius:12px;
+  padding:8px;
+  box-shadow: 0 6px 14px rgba(6,12,34,0.06);
+}
+.history-header{ display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:8px;}
+.history-header h3{ margin:0; font-size:0.95rem; }
+.history-list{ list-style:none; padding:0; margin:0; max-height:250px; overflow:auto; }
+.history-list li{
+  padding:6px 8px; margin-bottom:6px; border-radius:8px;
+  background:rgba(0,0,0,0.02); font-size:0.9rem; display:flex; justify-content:space-between; align-items:center;
+}
+.history-list li button{ background:transparent; border:none; color:var(--muted); cursor:pointer; font-weight:600; }
+
+/* Footer */
+.app-footer{ text-align:center; color:rgba(255,255,255,0.85); margin-top:10px; font-size:0.82rem; }
+
+/* Dark mode (applied to body via .dark-theme on .app wrapper from JS) */
+.app.dark .calculator-card{ background:#061015; color:#f4fbff }
+.app.dark .display{ background: rgba(255,255,255,0.04); color:#f7fbff }
+.app.dark .button{ background: linear-gradient(180deg,#0f1e24,#0b1418); color:#e6f6ff; box-shadow:none }
+.app.dark .button.num{ background: linear-gradient(180deg,#09232b,#0a1b22) }
+.app.dark .button.operator{ background: linear-gradient(180deg,#1b1221,#23142a); color:#f2b0f0 }
+.app.dark .button.equal{ background: linear-gradient(180deg,#123826,#0f2f1f); color:#bff0d6 }
+
+/* Responsive: collapse history under buttons on small screens */
+@media (max-width:720px){
+  .row.small-gap{ flex-direction:column; }
+  .history-panel{ width:100%; order:2; }
+  .buttons-grid{ order:1; }
+  .history-panel{ display:flex; flex-direction:column; }
+  .history-list li{ font-size:0.92rem }
+}
